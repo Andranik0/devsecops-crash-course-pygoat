@@ -20,4 +20,6 @@ jobs:
       run: pip install bandit
 
     - name: Run Bandit Scan
+      # add -l for low, -ll for medium, -lll for high severity findings
+      # same with -i for confidence
       run: bandit -r -ll -ii .
