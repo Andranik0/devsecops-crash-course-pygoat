@@ -23,3 +23,10 @@ jobs:
       # add -l for low, -ll for medium, -lll for high severity findings
       # same with -i for confidence
       run: bandit -r -ll -ii . -f json -o bandit-report.json
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: bandit-findings
+        path: bandit-report.json
