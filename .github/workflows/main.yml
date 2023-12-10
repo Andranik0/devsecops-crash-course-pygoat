@@ -47,15 +47,15 @@ jobs:
     - name: Build image
       run: docker build -f Dockerfile -t myapp:latest .
 
-    - name: Run DockerScout scan
-      uses: docker/scout-action@v1.2.2
-      with:
-        dockerhub-user: ${{ secrets.DOCKER_REPO_USER }}
-        dockerhub-password: ${{ secrets.DOCKER_REPO_PWD }}
-        command: quickview,cves
-        only-severities: critical,high
-        sarif-file: scout-report.sarif
-        exit-code: true
+    # - name: Run DockerScout scan
+    #   uses: docker/scout-action@v1.2.2
+    #   with:
+    #     dockerhub-user: ${{ secrets.DOCKER_REPO_USER }}
+    #     dockerhub-password: ${{ secrets.DOCKER_REPO_PWD }}
+    #     command: quickview,cves
+    #     only-severities: critical,high
+    #     sarif-file: scout-report.sarif
+    #     exit-code: true
 
     - name: Run Trivy image scan
       uses: aquasecurity/trivy-action@0.16.0
@@ -65,12 +65,12 @@ jobs:
         format: json
         output: trivy-report.json
     
-    - name: upload scout scan artifact
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: docker-scout-findings
-        path: scout-report.sarif
+    # - name: upload scout scan artifact
+    #   uses: actions/upload-artifact@v3
+    #   if: always()
+    #   with:
+    #     name: docker-scout-findings
+    #     path: scout-report.sarif
 
     - name: upload trivy scan artifact
       uses: actions/upload-artifact@v3
