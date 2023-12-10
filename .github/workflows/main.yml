@@ -45,7 +45,7 @@ jobs:
         docker_version: '20.10.7'
 
     - name: Build image
-      run: docker build -f Dockerfile -t myPythonApp:latest .
+      run: docker build -f Dockerfile -t myapp:latest .
 
     - name: Run DockerScout scan
       run: |
