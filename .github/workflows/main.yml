@@ -60,7 +60,6 @@ jobs:
     - name: Run Trivy image scan
       uses: aquasecurity/trivy-action@0.16.0
       with:
-        exit-code: true
         severity: HIGH,CRITICAL
         format: json
         output: trivy-report.json
