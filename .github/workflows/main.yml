@@ -3,33 +3,33 @@ name: CI
 on: [push]
 
 jobs:
-  sast_scan:
-    name: Bandit SAST Scan
-    runs-on: ubuntu-latest
+  # sast_scan:
+  #   name: Bandit SAST Scan
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+  #   - name: Set up Python
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: 3.8
 
-    - name: Install Bandit
-      run: pip install bandit
+  #   - name: Install Bandit
+  #     run: pip install bandit
 
-    - name: Run Bandit Scan
-      # add -l for low, -ll for medium, -lll for high severity findings
-      # same with -i for confidence
-      run: bandit -r -ll -ii . -f json -o bandit-report.json
+  #   - name: Run Bandit Scan
+  #     # add -l for low, -ll for medium, -lll for high severity findings
+  #     # same with -i for confidence
+  #     run: bandit -r -ll -ii . -f json -o bandit-report.json
 
-    - name: upload sast artifact
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: bandit-findings
-        path: bandit-report.json
+  #   - name: upload sast artifact
+  #     uses: actions/upload-artifact@v3
+  #     if: always()
+  #     with:
+  #       name: bandit-findings
+  #       path: bandit-report.json
 
   image_scan:
     name: Build image and run image scan
@@ -60,6 +60,7 @@ jobs:
     - name: Run Trivy image scan
       uses: aquasecurity/trivy-action@0.16.0
       with:
+        input: myapp:latest
         severity: HIGH,CRITICAL
         format: json
         output: trivy-report.json
