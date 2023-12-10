@@ -24,7 +24,7 @@ jobs:
       # same with -i for confidence
       run: bandit -r -ll -ii . -f json -o bandit-report.json
 
-    - name: upload artifact
+    - name: upload sast artifact
       uses: actions/upload-artifact@v3
       if: always()
       with:
@@ -53,4 +53,13 @@ jobs:
         dockerhub-user: ${{ secrets.DOCKER_REPO_USER }}
         dockerhub-password: ${{ secrets.DOCKER_REPO_PWD }}
         command: quickview,cves
+        only-severities: critical,high
+        sarif-file: scout-report.sarif
+
+    - name: upload container scan artifact
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: docker-scout-findings
+        path: scout-report.sarif
     
