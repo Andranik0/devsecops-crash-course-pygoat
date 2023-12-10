@@ -57,10 +57,25 @@ jobs:
         sarif-file: scout-report.sarif
         exit-code: true
 
-    - name: upload container scan artifact
+    - name: Run Trivy image scan
+      uses: aquasecurity/trivy-action@0.16.0
+      with:
+        exit-code: true
+        severity: HIGH,CRITICAL
+        format: json
+        output: trivy-report.json
+    
+    - name: upload scout scan artifact
       uses: actions/upload-artifact@v3
       if: always()
       with:
         name: docker-scout-findings
         path: scout-report.sarif
+
+    - name: upload trivy scan artifact
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: trivy-findings
+        path: trivy-report.json
     
